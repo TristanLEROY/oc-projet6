@@ -9,10 +9,20 @@ const getData = async () => {
   }
 }
 
+const getCategory = async () => {
+  try {
+    const responseButton = await fetch('http://localhost:5678/api/categories')
+    if (responseButton.ok) {
+      return await responseButton.json()
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const creatework = async (filter) => {
   let works = await getData()
   const gallerySection = document.querySelector('.gallery')
-  gallerySection.innerHTML = ''
   if (filter) {
     works = works.filter((work) => work.categoryId === parseInt(filter))
   }
@@ -28,15 +38,38 @@ const creatework = async (filter) => {
   })
 }
 
+const createButton = async () => {
+  const categories = await getCategory()
+  const buttonDiv = document.querySelector('.buttonDiv')
+  const buttonAll = document.createElement('button')
+  buttonAll.innerText = 'Tous'
+  buttonAll.classList.add('button-item')
+  buttonDiv.appendChild(buttonAll)
+  categories.forEach((category) => {
+    const buttonElement = document.createElement('button')
+    buttonElement.innerText = category.name
+    buttonElement.id = category.id
+    buttonElement.classList.add('button-item')
+    buttonDiv.appendChild(buttonElement)
+  })
+  attacheListener()
+}
+
+const attacheListener = () => {
+  document.querySelectorAll('.button-item').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const gallerySection = document.querySelector('.gallery')
+      gallerySection.innerHTML = ''
+      clean()
+      creatework(btn.id)
+      btn.classList.add('button-click')
+    })
+  })
+}
+
 creatework()
 
-document.querySelectorAll('.button-item').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    clean()
-    creatework(btn.id)
-    btn.classList.add('button-click')
-  })
-})
+createButton()
 
 const clean = () => {
   document.querySelectorAll('.button-item').forEach((btnR) => {
