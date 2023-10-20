@@ -9,9 +9,13 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="work.js" defer></script>
+	<script src="modal.js" defer></script>
 </head>
 
 <body>
@@ -21,7 +25,7 @@
 			<ul>
 				<li>projets</li>
 				<li>contact</li>
-				<li><a href="connect.html">login</a></li>
+				<li><a href="login.html">login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -43,12 +47,48 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
+			<div class="modif">
+				<h2>Mes Projets</h2>
+				<img src="./assets/icons/Group.svg" alt="pen to square" class="icon-title">
+				<a href="#modal" class="js-modal">Modifier</a>
+			</div>
+
+			<aside id="modal" class="modal" aria-hidden="true" aria-labelledby="title-modal" style="display: none;">
+
+				<div class="modal-wrapper js-modal-stop galery-picture">
+					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+					<h2 class="title-modal">Galerie photo</h2>
+					<div class="js-gallery-modal">
+					</div>
+					<input type="button" value="Ajouter une photo" class="add-button">
+				</div>
+
+				<div class="modal-wrapper js-modal-stop add-picture" style="display: none;">
+					<button class=" js-arrow-left"><i class="fa-solid fa-arrow-left fa-xs"></i></button>
+					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+					<h2 class="title-modal">Ajout photo</h2>
+					<div class="js-gallery-modal">
+						<form action="#" method="post">
+							<div class="square-add-picture">
+								<i class="fa-regular fa-image"></i>
+								<input type="file" value="+ Ajouter photo" class="add-button2">
+								<p>jpg, png : 4mo max</p>
+							</div>
+							<label for="title">Titre</label>
+							<input type="text" name="title" id="title">
+							<label for="choix">Catégorie</label>
+							<select name="choix" id="choix">
+								<!-- <option value="1">Objet</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hotels & restaurants</option> -->
+							</select>
+						</form>
+					</div>
+					<input type="button" value="Ajouter une photo" class="add-button3">
+				</div>
+			</aside>
+
 			<div class="buttonDiv">
-				<!-- <button class="button-item button-all">Tous</button>
-				<button class="button-item button-object" id="1">Objets</button>
-				<button class="button-item button-appart" id="3">Appartements</button>
-				<button class="button-item button-hotel" id="2">Hôtels & restaurants</button> -->
 			</div>
 			<div class="gallery">
 			</div>
