@@ -1,5 +1,23 @@
 let modal = null
 
+const setWork = async (work) => {
+  const formData = new FormData()
+  formData.append('title', work.title)
+  formData.append('image', work.img)
+  formData.append('category', work.category)
+  try {
+    await fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const openModal = (e) => {
   e.preventDefault()
   const galeryPicture = document.querySelector('.galery-picture')
@@ -7,16 +25,19 @@ const openModal = (e) => {
   galeryPicture.style.display = null
   addPicture.style.display = 'none'
   const target = document.querySelector(e.target.getAttribute('href'))
-  addPicture.style.display = 'none'
   target.style.display = null
   target.removeAttribute('aria-hidden')
   target.setAttribute('aria-modal', 'true')
   modal = target
   modal.addEventListener('click', closeModal)
-  modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
-  modal
-    .querySelector('.js-modal-stop')
-    .addEventListener('click', stopPropagation)
+  modal.querySelectorAll('.js-modal-close').forEach((modal) => {
+    modal.addEventListener('click', closeModal)
+  })
+  modal.querySelectorAll('.js-modal-stop').forEach((modal) => {
+    modal.addEventListener('click', stopPropagation)
+  })
+  populateSelect()
+  document.querySelector('.create-work').disabled = true
 }
 
 const closeModal = (e) => {
@@ -92,20 +113,84 @@ const buttonImage = () => {
     btn.addEventListener('click', () => {
       deleteWork(btn.id)
       createImage()
+      creatework()
     })
   })
 }
 
 document.querySelector('.add-button').addEventListener('click', () => {
-  const galeryPicture = document.querySelector('.galery-picture')
-  const addPicture = document.querySelector('.add-picture')
-  galeryPicture.style.display = 'none'
-  addPicture.style.display = null
+  document.querySelector('.galery-picture').style.display = 'none'
+  document.querySelector('.add-picture').style.display = null
 })
 
 document.querySelector('.js-arrow-left').addEventListener('click', () => {
-  const galeryPicture = document.querySelector('.galery-picture')
-  const addPicture = document.querySelector('.add-picture')
-  galeryPicture.style.display = null
-  addPicture.style.display = 'none'
+  document.querySelector('.galery-picture').style.display = null
+  document.querySelector('.add-picture').style.display = 'none'
+})
+
+const populateSelect = async () => {
+  const category = await getCategory()
+  category.forEach((category) => {
+    const option = document.createElement('option')
+    option.innerText = category.name
+    option.value = category.id
+    document.getElementById('choix').appendChild(option)
+  })
+}
+
+document.getElementById('file').addEventListener('change', (e) => {
+  document.querySelector('.square-add-picture').style.display = 'none'
+  const divImage = document.querySelector('.picture-preview')
+  divImage.classList.add('square-add-picture')
+  divImage.style.display = null
+  const image = document.createElement('img')
+  divImage.appendChild(image)
+  image.classList.add('square-picture')
+  image.setAttribute('src', URL.createObjectURL(e.target.files[0]))
+})
+
+document.querySelector('.form').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const work = {
+    title: document.getElementById('title').value,
+    category: document.getElementById('choix').value,
+    img: document.getElementById('file').files[0]
+  }
+  await setWork(work)
+  await creatework()
+  createImage()
+  document.querySelector('.form').reset()
+  document.querySelector('.square-add-picture').style.display = null
+  document.querySelector('.picture-preview').style.display = 'none'
+  document.querySelector('.square-picture').style.display = 'none'
+})
+
+const changeLogout = () => {
+  if (sessionStorage.getItem('token')) {
+    let logout = document.querySelector('.logout')
+    logout.textContent = 'logout'
+    document.querySelector('.edition-mode').style.display = null
+    document.querySelector('.js-modal').style.display = null
+    document.querySelector('.icon-title').style.display = null
+    logout.addEventListener('click', () => {
+      sessionStorage.removeItem('token')
+      window.location = 'index.html'
+    })
+  } else {
+    document.querySelector('.edition-mode').style.display = 'none'
+    document.querySelector('.js-modal').style.display = 'none'
+    document.querySelector('.icon-title').style.display = 'none'
+  }
+}
+
+changeLogout()
+
+document.querySelector('.form').addEventListener('change', () => {
+  if (
+    document.getElementById('title').value &&
+    document.getElementById('choix').value !== '0' &&
+    document.getElementById('file').files[0]
+  ) {
+    document.querySelector('.create-work').disabled = false
+  }
 })

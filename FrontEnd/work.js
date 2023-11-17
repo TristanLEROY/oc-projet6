@@ -23,6 +23,7 @@ const getCategory = async () => {
 const creatework = async (filter) => {
   let works = await getData()
   const gallerySection = document.querySelector('.gallery')
+  gallerySection.innerHTML = ''
   if (filter) {
     works = works.filter((work) => work.categoryId === parseInt(filter))
   }
@@ -58,8 +59,7 @@ const createButton = async () => {
 const attacheListener = () => {
   document.querySelectorAll('.button-item').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const gallerySection = document.querySelector('.gallery')
-      gallerySection.innerHTML = ''
+      document.querySelector('.gallery').innerHTML = ''
       clean()
       creatework(btn.id)
       btn.classList.add('button-click')

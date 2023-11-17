@@ -107,6 +107,7 @@ section {
 }
 body {
   line-height: 1;
+  display: inline;
 }
 ol,
 ul {
@@ -137,8 +138,14 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  margin: 50px 0;
+  margin: 50px 20%;
 }
+
+main {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
 section {
   margin: 50px 0;
 }
@@ -264,14 +271,31 @@ a:hover {
   width: 50%;
   margin: auto;
 }
+#choix {
+  width: 100%;
+}
+#title {
+  width: 99%;
+  margin-top: 10px;
+  margin-bottom: 21px;
+}
+
 #contact > *,
 #login > * {
   text-align: center;
 }
+select {
+  margin-top: 10px;
+}
+form label {
+  margin-bottom: 10px;
+}
+
 #contact h2,
 #login h2 {
   margin-bottom: 20px;
 }
+
 #contact form,
 #login form {
   text-align: left;
@@ -282,14 +306,17 @@ a:hover {
 
 #contact input,
 #login input,
-.add-button {
+.add-button,
+#title,
+#choix {
   height: 50px;
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 #contact label,
-#login label {
+#login label,
+#title label {
   margin: 2em 0 1em 0;
 }
 #contact textarea,
@@ -336,6 +363,19 @@ footer nav ul {
 
 /*code pour modale*/
 
+.edition-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 59px;
+  background-color: black;
+  color: white;
+  gap: 10px;
+}
+
+.icon-edition {
+  filter: invert();
+}
 .modif {
   display: flex;
   flex-direction: row;
@@ -393,6 +433,7 @@ footer nav ul {
 
 .title-modal {
   margin-top: 70px;
+  color: black;
 }
 
 .js-gallery-modal {
@@ -402,6 +443,16 @@ footer nav ul {
   margin-left: 105px;
   margin-right: 105px;
   gap: 4px;
+}
+
+.js-add-picture-modal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 105px;
+  margin-right: 105px;
+  gap: 4px;
+  justify-content: center;
 }
 
 .js-gallery-modal figure {
@@ -433,4 +484,69 @@ footer nav ul {
   width: 237px;
   border: none;
   cursor: pointer;
+  border-top: 1px black;
+}
+
+.create-work {
+  display: flex;
+  justify-content: center;
+  height: 36px;
+  width: 237px;
+  border: none;
+  cursor: pointer;
+}
+.create-work:disabled {
+  background-color: #a7a7a7;
+  cursor: default;
+}
+
+.square-add-picture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 460px;
+  height: 172px;
+  border-radius: 3px;
+  background: #e8f1f6;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-bottom: 30px;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.label-file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Work Sans';
+  font-weight: 500;
+  color: #306685;
+  background-color: #cbd6dc;
+  margin: 2em auto;
+  height: 36px;
+  width: 180px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.fa-image {
+  color: #b9c5cc;
+}
+
+.js-arrow-left {
+  position: absolute;
+  left: 20px;
+  top: 26px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.square-picture {
+  height: 225px;
+  width: 158px;
+  margin-top: -20px;
 }
